@@ -16,7 +16,7 @@ window.onload = function() {
 				oImg.src='images/'+dataInt.data[i].src;
 				oPic.appendChild(oImg);
 			}
-			waterFall('main', 'box');//让重新加载的图片出现在应该出现的位置
+			waterFall('main', 'box'); //让重新加载的图片出现在应该出现的位置
 		}
 	};
 };
