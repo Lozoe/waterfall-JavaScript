@@ -1,5 +1,24 @@
 window.onload = function() {
 	waterFall('main', 'box');
+	var dataInt={"data":[{"src":"0.jpg"},{"src":"1.jpg"},{"src":"2.jpg"}]};
+	window.onscroll=function() {
+		if(checkScrollSlide()) {
+			var oParent=document.getElementById('main');
+			//将数据块渲染到页面的尾部
+			for(var i=0;i<dataInt.data.length;i++) {
+				var oBox=document.createElement('div');
+				oBox.className='box';
+				oParent.appendChild(oBox);
+				var oPic=document.createElement('div');
+				oPic.className='pic';
+				oBox.appendChild(oPic);
+				var oImg=document.createElement('img');
+				oImg.src='images/'+dataInt.data[i].src;
+				oPic.appendChild(oImg);
+			}
+			waterFall('main', 'box');//让重新加载的图片出现在应该出现的位置
+		}
+	};
 };
 
 function waterFall(parent, box) {
@@ -29,7 +48,7 @@ function waterFall(parent, box) {
 			hArr[index]+=oBoxs[i].offsetHeight;
 		}
 	}
-	console.log(hArr);
+	// console.log(hArr);
 }
 
 //根据父元素id和子元素类名取元素
@@ -50,4 +69,18 @@ function getMinHeightIndex(arr,val) {
 			return i;
 		}
 	}
+}
+
+//检测是否具备滚动加载数据块的条件
+function checkScrollSlide() {
+	var oParent=document.getElementById('main');
+	oBoxs=getByClass(oParent,'box');
+	var lastBoxH=oBoxs[oBoxs.length-1].offsetTop+Math.floor(oBoxs[oBoxs.length-1].offsetHeight/2);
+	//页面滚走的距离
+	var scrollTop=document.body.scrollTop||document.documentElement.scrollTop;
+	// console.log(scrollTop);
+	//页面窗口的距离
+	var height=document.body.clientHeight||document.documentElement.clientHeight;
+	// console.log(height);
+	return (lastBoxH<scrollTop+height)?true:false;
 }
